@@ -531,5 +531,100 @@
         "description": "Space or comma-separated KUI style tokens, e.g. title/lg h2 or size:32 bold."
       }
     ]
+  },
+  {
+    "id": "text-area",
+    "fields": [
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "label",
+        "label": "Label"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "placeholder",
+        "label": "Placeholder"
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "value",
+        "label": "Default value"
+      },
+      {
+        "component": "select",
+        "valueType": "string",
+        "name": "resizeable",
+        "label": "Resize",
+        "value": "auto",
+        "options": [
+          {
+            "name": "Auto",
+            "value": "auto"
+          },
+          {
+            "name": "Manual",
+            "value": "manual"
+          }
+        ]
+      },
+      {
+        "component": "select",
+        "valueType": "string",
+        "name": "textareaSize",
+        "label": "Size",
+        "value": "medium",
+        "options": [
+          {
+            "name": "Small",
+            "value": "small"
+          },
+          {
+            "name": "Medium",
+            "value": "medium"
+          },
+          {
+            "name": "Large",
+            "value": "large"
+          }
+        ]
+      },
+      {
+        "component": "select",
+        "valueType": "string",
+        "name": "textareaKind",
+        "label": "Kind",
+        "value": "flat",
+        "options": [
+          {
+            "name": "Flat",
+            "value": "flat"
+          },
+          {
+            "name": "Floating",
+            "value": "floating"
+          }
+        ]
+      },
+      {
+        "component": "select",
+        "valueType": "string",
+        "name": "textareaLayout",
+        "label": "Layout",
+        "value": "horizontal",
+        "options": [
+          {
+            "name": "Horizontal",
+            "value": "horizontal"
+          },
+          {
+            "name": "Vertical",
+            "value": "vertical"
+          }
+        ]
+      }
+    ]
   }
 ]

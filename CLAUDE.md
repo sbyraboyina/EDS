@@ -56,7 +56,7 @@ GitLab mirror and won't trigger Code Sync.
 ## Blocks (current)
 
 accordion, button, cards, columns, contact-info, footer, fragment, header, hero,
-input-shell, text.
+input-shell, text, text-area.
 
 ### Block rendering pattern (all KUI blocks follow this)
 
@@ -155,6 +155,26 @@ Row cells: [label] | [placeholder] | [optional submit]. Submit cell:
 `Submit (large, secondary)` — same option tokens as button.
 Block-level data attrs: `data-input-type`, `data-name`, `data-dismissible`,
 `data-input-kind` (flat|floating), `data-input-size`, `data-input-layout`.
+
+### text-area  (Kaizen TextArea)
+
+One field per row, same as cards. Fields are set with the Google Docs
+**paragraph-style menu**:
+
+- **Heading 3** -> Label
+- **Heading 4** -> Help text (below the field)
+- **Normal text** -> Placeholder, then the default value (or name them explicitly:
+  `Placeholder: Enter a value`, `Value: Prefilled text`)
+
+Options go in the block name cell — `text-area (auto, large)` — or as a `[auto, large]`
+line inside a row (same convention as cards). Tokens: `auto|manual`,
+`small|medium|large`, `flat|floating`, `horizontal|vertical`, `disabled`.
+Plain cells `[label] | [placeholder] | [optional default value]` still work when no
+heading styles are used.
+Block-level data attrs (HTML authoring): `data-name`, `data-disabled`, `data-rows`,
+`data-resizeable` (auto|manual), `data-textarea-kind` (flat|floating),
+`data-textarea-size` (small|medium|large), `data-textarea-layout`
+(horizontal|vertical).
 
 ## Publish workflow
 

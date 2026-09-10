@@ -1,0 +1,30 @@
+/*
+ * Layout only. The textarea itself is styled by Kaizen (text-area.css)
+ * already in the KUI bundle.
+ */
+.text-area.block {
+  margin-inline: auto;
+  max-width: 560px;
+  width: 100%;
+}
+
+.text-area-fields {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.text-area-field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+
+.text-area-label {
+  font-weight: 600;
+}
+
+.text-area-help {
+  color: var(--color-text-secondary, #666);
+  margin: 0;
+}

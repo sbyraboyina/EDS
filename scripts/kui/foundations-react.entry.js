@@ -25,6 +25,7 @@ import "@kui/foundations-css/dist/components/button.css";
 import "@kui/foundations-css/dist/components/accordion.css";
 import "@kui/foundations-css/dist/components/tabs.css";
 import "@kui/foundations-css/dist/components/input-shell.css";
+import "@kui/foundations-css/dist/components/text-area.css";
 import "@kui/foundations-css/dist/components/badge.css";
 
 // React is now bundled in (self-hosted, no esm.sh). Re-export it here so blocks
@@ -53,6 +54,7 @@ export { Text } from "@kui/foundations-react/Text";
 export { Accordion } from "@kui/foundations-react/Accordion";
 export { Tabs } from "@kui/foundations-react/Tabs";
 export { InputShell, InputDismissButton } from "@kui/foundations-react/InputShell";
+export { TextArea } from "@kui/foundations-react/TextArea";
 export { Badge } from "@kui/foundations-react/Badge";
 export {
   ChevronLeft,
