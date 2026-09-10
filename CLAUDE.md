@@ -170,8 +170,9 @@ One field per row, same as cards. Fields are set with the Google Docs
 Options go in the block name cell — `text-area (auto, large)` — or as a `[auto, large]`
 line inside a row (same convention as cards). Tokens: `auto|manual`,
 `small|medium|large`, `flat|floating`, `horizontal|vertical`, `disabled`.
-Plain cells `[label] | [placeholder] | [optional default value]` still work when no
-heading styles are used.
+With no heading styles at all, values are read in order — either across the cells
+`[label] | [placeholder] | [optional default value]`, or line by line down a single
+cell (line 1 = label, line 2 = placeholder, line 3 = default value).
 Block-level data attrs (HTML authoring): `data-name`, `data-disabled`, `data-rows`,
 `data-resizeable` (auto|manual), `data-textarea-kind` (flat|floating),
 `data-textarea-size` (small|medium|large), `data-textarea-layout`

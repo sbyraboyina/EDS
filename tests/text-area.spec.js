@@ -40,8 +40,14 @@ test.describe('Text Area Block', () => {
   });
 
   test('renders one field per authored row', async ({ page }) => {
-    await expect(page.locator('.text-area.block .text-area-field')).toHaveCount(2);
-    await expect(page.locator('.text-area.block textarea')).toHaveCount(2);
+    await expect(page.locator('.text-area.block .text-area-field')).toHaveCount(3);
+    await expect(page.locator('.text-area.block textarea')).toHaveCount(3);
+  });
+
+  test('reads an unstyled single-column row line by line', async ({ page }) => {
+    const field = page.locator('.text-area.block .text-area-field').nth(2);
+    await expect(field.locator('label')).toContainText('How did you hear about us?');
+    await expect(field.locator('textarea')).toHaveAttribute('placeholder', 'Events, press, or a partner');
   });
 
   test('reads label, placeholder and help from paragraph styles', async ({ page }) => {

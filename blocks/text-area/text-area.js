@@ -15,15 +15,21 @@ function dataOption(value, allowed, fallback) {
   return allowed.includes(value) ? value : fallback;
 }
 
+// Trailing separators are a common leftover when an author splits a run-on
+// line ("Message ·") — drop them so they never reach the rendered field.
+function clean(value) {
+  return (value || "").replace(/^[\s·•|]+|[\s·•|]+$/g, "");
+}
+
 function text(el) {
-  return el?.textContent.trim() || undefined;
+  return clean(el?.textContent) || undefined;
 }
 
 // Cell text with any "[auto, large]" option group removed.
 function cellText(cell) {
   const value = text(cell);
   const found = parseOptions(value);
-  return (found ? value.replace(found.match, "").trim() : value) || undefined;
+  return (found ? clean(value.replace(found.match, "")) : value) || undefined;
 }
 
 function parseRows(value) {
@@ -54,13 +60,13 @@ function collectParagraphs(scope) {
   const named = {};
 
   [...scope.querySelectorAll("p")].forEach((p) => {
-    let value = p.textContent.trim();
+    let value = text(p);
     if (!value) return;
 
     const found = parseOptions(value);
     if (found) {
       tokens.push(...found.tokens);
-      value = value.replace(found.match, "").trim();
+      value = clean(value.replace(found.match, ""));
     }
     if (!value) return;
 
@@ -83,12 +89,15 @@ function collectParagraphs(scope) {
 //   Normal text  -> placeholder, then the default value
 //   "[...]" line -> options: auto|manual, small|medium|large, flat|floating,
 //                   horizontal|vertical, disabled
-// Authoring the plain cells [label] | [placeholder] | [value] still works.
+// With no heading styles at all, the values are read in order — either across
+// the cells [label] | [placeholder] | [value], or line by line down a single
+// cell, whichever the author used.
 function readField(block, row) {
   const cells = [...row.children];
   const heading = row.querySelector("h1, h2, h3");
   const { body, named, tokens } = collectParagraphs(row);
   const styled = Boolean(heading || row.querySelector("h4"));
+  const lines = !styled && cells.length === 1 ? body : null;
 
   const opt = [...tokens, ...block.classList].map((t) => t.toLowerCase());
   const attr = (key) => row.dataset[key] || block.dataset[key];
@@ -96,20 +105,33 @@ function readField(block, row) {
     opt.find((t) => allowed.includes(t)) || dataOption(attr(key), allowed, fallback);
 
   const helpText = text(row.querySelector("h4"));
-  const authoredPlaceholder = styled ? named.placeholder || body[0] : cellText(cells[1]);
+  let label;
+  let placeholder;
+  let value;
+
+  if (styled) {
+    [label, placeholder, value] = [text(heading), body[0], body[1]];
+  } else if (lines) {
+    [label, placeholder, value] = lines;
+  } else {
+    [label, placeholder, value] = cells.map(cellText);
+  }
+
+  placeholder = named.placeholder || placeholder;
+  value = named.value || value;
 
   return {
     disabled: opt.includes("disabled") || attr("disabled") === "true",
-    help: authoredPlaceholder ? helpText : undefined,
+    help: placeholder ? helpText : undefined,
     kind: pick(KINDS, "textareaKind", "flat"),
-    label: styled ? text(heading) || "" : cellText(cells[0]) || "",
+    label: label || "",
     layout: pick(LAYOUTS, "textareaLayout", "horizontal"),
     name: attr("name") || "",
-    placeholder: authoredPlaceholder || helpText || "",
+    placeholder: placeholder || helpText || "",
     resizeable: pick(RESIZE, "resizeable", "auto"),
     rows: parseRows(attr("rows")),
     size: pick(SIZES, "textareaSize", "medium"),
-    value: (styled ? named.value || body[1] : cellText(cells[2])) || "",
+    value: value || "",
   };
 }
 
