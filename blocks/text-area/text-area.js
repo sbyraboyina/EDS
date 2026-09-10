@@ -78,7 +78,8 @@ function collectParagraphs(scope) {
 // One field per row, same as cards. Fields are set with the Google Docs
 // paragraph-style menu:
 //   Heading 3    -> label
-//   Heading 4    -> help text under the field
+//   Heading 4    -> help text under the field, or the placeholder when no
+//                   Normal text paragraph is authored
 //   Normal text  -> placeholder, then the default value
 //   "[...]" line -> options: auto|manual, small|medium|large, flat|floating,
 //                   horizontal|vertical, disabled
@@ -94,14 +95,17 @@ function readField(block, row) {
   const pick = (allowed, key, fallback) =>
     opt.find((t) => allowed.includes(t)) || dataOption(attr(key), allowed, fallback);
 
+  const helpText = text(row.querySelector("h4"));
+  const authoredPlaceholder = styled ? named.placeholder || body[0] : cellText(cells[1]);
+
   return {
     disabled: opt.includes("disabled") || attr("disabled") === "true",
-    help: text(row.querySelector("h4")),
+    help: authoredPlaceholder ? helpText : undefined,
     kind: pick(KINDS, "textareaKind", "flat"),
     label: styled ? text(heading) || "" : cellText(cells[0]) || "",
     layout: pick(LAYOUTS, "textareaLayout", "horizontal"),
     name: attr("name") || "",
-    placeholder: (styled ? named.placeholder || body[0] : cellText(cells[1])) || "",
+    placeholder: authoredPlaceholder || helpText || "",
     resizeable: pick(RESIZE, "resizeable", "auto"),
     rows: parseRows(attr("rows")),
     size: pick(SIZES, "textareaSize", "medium"),

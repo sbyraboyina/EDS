@@ -162,7 +162,8 @@ One field per row, same as cards. Fields are set with the Google Docs
 **paragraph-style menu**:
 
 - **Heading 3** -> Label
-- **Heading 4** -> Help text (below the field)
+- **Heading 4** -> Help text (below the field). With no Normal-text line it becomes
+  the placeholder instead, so the hint sits inside the box.
 - **Normal text** -> Placeholder, then the default value (or name them explicitly:
   `Placeholder: Enter a value`, `Value: Prefilled text`)
 
